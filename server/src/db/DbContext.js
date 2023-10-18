@@ -1,10 +1,13 @@
 import mongoose from 'mongoose'
 import { AccountSchema } from '../models/Account'
-import { ValueSchema } from '../models/Value'
 
 class DbContext {
-  Values = mongoose.model('Value', ValueSchema);
   Account = mongoose.model('Account', AccountSchema);
+
+  Galaxies = mongoose.model('Galaxies', GalaxySchema)
+  Planets = mongoose.model('Planets', PlanetSchema)
+  Species = mongoose.model('Species', SpeciesSchema)
+  Colonies = mongoose.model('Colonies', ColonySchema)
 }
 
 export const dbContext = new DbContext()

@@ -1,3 +1,4 @@
+import { Auth0Provider } from "@bcwdev/auth0provider";
 import { planetService } from "../services/PlanetService.js";
 import BaseController from "../utils/BaseController.js";
 
@@ -7,8 +8,10 @@ export class PlanetController extends BaseController {
     this.router
       .get('', this.getPlanets)
       .get('/:planetId', this.getPlanetById)
-      .use('', this.getPlanets)
+      .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.createPlanet)
+    // .put('/:planetId', this.updatePlanet)
+    // .delete('/:planetId', this.removePlanet)
   }
 
   async getPlanets(req, res, nxt) {

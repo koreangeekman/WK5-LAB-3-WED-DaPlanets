@@ -32,6 +32,8 @@ export class GalaxyController extends BaseController {
     }
   }
 
+  // vv AUTHORIZED USERS ONLY vv
+
   async createGalaxy(req, res, nxt) {
     try {
       req.body.creatorId = req.userInfo.id
@@ -41,6 +43,5 @@ export class GalaxyController extends BaseController {
       nxt(error)
     }
   }
-
 
 }

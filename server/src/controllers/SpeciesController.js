@@ -1,15 +1,17 @@
 import { Auth0Provider } from "@bcwdev/auth0provider";
 import { speciesService } from "../services/SpeciesService.js";
 import BaseController from "../utils/BaseController.js";
+import { colonyService } from "../services/ColonyService.js";
 
 export class SpeciesController extends BaseController {
   constructor() {
     super('api/species')
     this.router
       .get('', this.getSpecies)
-      .get('/:speciesId', this.getSpecies)
+      .get('/:speciesId', this.getSpeciesById)
+      .get('/:speciesId/colonies', this.getColoniesBySpecies)
       .use(Auth0Provider.getAuthorizedUserInfo)
-      .post('', this.getSpecies)
+      .post('', this.createSpecies)
   }
 
   async getSpecies(req, res, nxt) {
@@ -24,6 +26,15 @@ export class SpeciesController extends BaseController {
   async getSpeciesById(req, res, nxt) {
     try {
       const species = await speciesService.getSpeciesById(req.params.speciesId);
+      return res.send(species)
+    } catch (error) {
+      nxt(error)
+    }
+  }
+
+  async getColoniesBySpecies(req, res, nxt) {
+    try {
+      const species = await colonyService.getColoniesBySpecies(req.params.speciesId);
       return res.send(species)
     } catch (error) {
       nxt(error)

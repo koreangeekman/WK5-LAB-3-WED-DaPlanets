@@ -10,8 +10,14 @@ class ColonyService {
   }
   async getColonyById(colonyId) {
     const colony = await dbContext.Colonies.findById(colonyId);
-    if (!colony) { throw new BadRequest(`Unable to locate moon by ID: ${colonyId}`) }
+    if (!colony) { throw new BadRequest(`Unable to locate Colony by ID: ${colonyId}`) }
     return colony;
+  }
+
+  async getColoniesBySpecies(speciesId) {
+    const colonies = await dbContext.Colonies.find({ speciesId: speciesId });
+    if (!colonies) { throw new BadRequest(`Unable to locate Colonies by Species ID: ${speciesId}`) }
+    return colonies;
   }
 
   // vv AUTHORIZED USERS ONLY vv

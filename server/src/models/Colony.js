@@ -3,8 +3,8 @@ import { Schema } from "mongoose"
 export const ColonySchema = new Schema({
   name: { type: String, required: true },
   population: { type: Number, required: true },
-  planetId: { type: String, required: true },
-  speciesId: { type: String, required: true },
+  planetId: { type: Schema.Types.ObjectId, required: true, ref: 'Planet' },
+  speciesId: { type: Schema.Types.ObjectId, required: true, ref: 'Species' },
   creatorId: { type: Schema.Types.ObjectId, required: true, ref: 'Account' },
 },
   {
@@ -16,4 +16,18 @@ ColonySchema.virtual('creator', {
   foreignField: '_id',
   justOne: true,
   ref: 'Profile'
+})
+
+ColonySchema.virtual('planet', {
+  localField: 'planetId',
+  foreignField: '_id',
+  justOne: true,
+  ref: 'Planet'
+})
+
+ColonySchema.virtual('species', {
+  localField: 'speciesId',
+  foreignField: '_id',
+  justOne: true,
+  ref: 'Species'
 })

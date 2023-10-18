@@ -18,3 +18,10 @@ PlanetSchema.virtual('creator', {
   justOne: true,
   ref: 'Profile'
 })
+
+PlanetSchema.virtual('galaxy', {
+  localField: 'galaxyId',
+  foreignField: '_id',
+  justOne: true,
+  ref: 'Galaxy'
+})

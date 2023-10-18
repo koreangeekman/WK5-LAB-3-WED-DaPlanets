@@ -5,17 +5,17 @@ import { BadRequest, Forbidden } from "../utils/Errors.js";
 class ColonyService {
 
   async getColonies() {
-    const colonies = await dbContext.Colonies.find();
+    const colonies = await dbContext.Colonies.find().populate('planet').populate('species');
     return colonies;
   }
   async getColonyById(colonyId) {
-    const colony = await dbContext.Colonies.findById(colonyId);
+    const colony = await dbContext.Colonies.findById(colonyId).populate('planet').populate('species');
     if (!colony) { throw new BadRequest(`Unable to locate Colony by ID: ${colonyId}`) }
     return colony;
   }
 
   async getColoniesBySpecies(speciesId) {
-    const colonies = await dbContext.Colonies.find({ speciesId: speciesId });
+    const colonies = await dbContext.Colonies.find({ speciesId: speciesId }).populate('planet').populate('species');
     if (!colonies) { throw new BadRequest(`Unable to locate Colonies by Species ID: ${speciesId}`) }
     return colonies;
   }

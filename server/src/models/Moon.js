@@ -16,7 +16,7 @@ MoonSchema.virtual('creator', {
   ref: 'Profile'
 })
 
-MoonSchema.virtual('moon', {
+MoonSchema.virtual('planet', {
   localField: 'planetId',
   foreignField: '_id',
   justOne: true,

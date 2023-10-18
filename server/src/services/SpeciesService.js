@@ -4,12 +4,12 @@ import { BadRequest, Forbidden } from "../utils/Errors.js";
 class SpeciesService {
 
   async getSpecies() {
-    const species = await dbContext.Species.find();
+    const species = await dbContext.Species.find().populate('homePlanet');
     return species;
   }
 
   async getSpeciesById(speciesId) {
-    const species = await dbContext.Species.findById(speciesId);
+    const species = (await dbContext.Species.findById(speciesId)).populate('homePlanet');
     if (!species) { throw new BadRequest(`Unable to identify Species by ID: ${speciesId}`) }
     return species;
   }

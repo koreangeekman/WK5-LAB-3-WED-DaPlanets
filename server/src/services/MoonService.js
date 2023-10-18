@@ -4,12 +4,12 @@ import { BadRequest } from "../utils/Errors.js";
 class MoonService {
 
   async getMoons() {
-    const moons = await dbContext.Moons.find();
+    const moons = await dbContext.Moons.find().populate('planet');
     return moons;
   }
 
   async getMoonById(moonId) {
-    const moon = await dbContext.Moons.findById(moonId);
+    const moon = await dbContext.Moons.findById(moonId).populate('planet');
     if (!moon) { throw new BadRequest(`Unable to locate moon by ID: ${moonId}`) }
     return moon;
   }

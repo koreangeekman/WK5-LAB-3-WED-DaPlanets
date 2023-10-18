@@ -14,6 +14,10 @@ class MoonService {
     return moon;
   }
 
+  async createMoon(body) {
+    const newMoon = await dbContext.Moons.create(body);
+    return newMoon;
+  }
 
 }
 

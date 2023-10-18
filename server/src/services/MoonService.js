@@ -10,9 +10,11 @@ class MoonService {
 
   async getMoonById(moonId) {
     const moon = await dbContext.Moons.findById(moonId);
-    if (moon) { throw new BadRequest(`Unable to locate moon by ID: ${moonId}`) }
+    if (!moon) { throw new BadRequest(`Unable to locate moon by ID: ${moonId}`) }
     return moon;
   }
+
+  // vv AUTHORIZED USERS ONLY vv
 
   async createMoon(body) {
     const newMoon = await dbContext.Moons.create(body);

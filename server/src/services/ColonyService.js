@@ -10,6 +10,7 @@ class ColonyService {
   }
   async getColonyById(colonyId) {
     const colony = await dbContext.Colonies.findById(colonyId);
+    if (!colony) { throw new BadRequest(`Unable to locate moon by ID: ${colonyId}`) }
     return colony;
   }
 

@@ -1,7 +1,6 @@
 import { dbContext } from "../db/DbContext.js";
 import { BadRequest, Forbidden } from "../utils/Errors.js";
 
-
 class GalaxyService {
 
   async getGalaxies() {
@@ -11,9 +10,12 @@ class GalaxyService {
 
   async getGalaxyById(galaxyId) {
     const galaxy = await dbContext.Galaxies.findById(galaxyId);
-    if (galaxy == undefined) { throw new BadRequest(`Unable to locate galaxy by ID: ${galaxyId}`) }
+    if (!galaxy) { throw new BadRequest(`Unable to locate galaxy by ID: ${galaxyId}`) }
     return galaxy;
   }
+
+  // vv AUTHORIZED USERS ONLY vv
+
   async createGalaxy(body) {
     const newGalaxy = await dbContext.Galaxies.create(body);
     return newGalaxy;

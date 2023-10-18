@@ -1,6 +1,8 @@
 import { Auth0Provider } from "@bcwdev/auth0provider";
 import { planetService } from "../services/PlanetService.js";
 import BaseController from "../utils/BaseController.js";
+import { moonService } from "../services/MoonService.js";
+import { colonyService } from "../services/ColonyService.js";
 
 export class PlanetController extends BaseController {
   constructor() {
@@ -8,6 +10,8 @@ export class PlanetController extends BaseController {
     this.router
       .get('', this.getPlanets)
       .get('/:planetId', this.getPlanetById)
+      .get('/:planetId/moons', this.getMoonsByPlanetId)
+      .get('/:planetId/colonies', this.getColoniesByPlanetId)
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.createPlanet)
     // .put('/:planetId', this.updatePlanet)
@@ -27,6 +31,24 @@ export class PlanetController extends BaseController {
     try {
       const planet = await planetService.getPlanetById(req.params.planetId);
       return res.send(planet)
+    } catch (error) {
+      nxt(error)
+    }
+  }
+
+  async getMoonsByPlanetId(req, res, nxt) {
+    try {
+      const moons = await moonService.getMoonsByPlanetId(req.params.planetId);
+      return res.send(moons)
+    } catch (error) {
+      nxt(error)
+    }
+  }
+
+  async getColoniesByPlanetId(req, res, nxt) {
+    try {
+      const colonies = await colonyService.getColoniesByPlanetId(req.params.planetId);
+      return res.send(colonies)
     } catch (error) {
       nxt(error)
     }

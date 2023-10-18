@@ -1,6 +1,7 @@
 import { Auth0Provider } from "@bcwdev/auth0provider";
 import { galaxyService } from "../services/GalaxyService.js";
 import BaseController from "../utils/BaseController.js";
+import { planetService } from "../services/PlanetService.js";
 
 export class GalaxyController extends BaseController {
   constructor() {
@@ -8,6 +9,7 @@ export class GalaxyController extends BaseController {
     this.router
       .get('', this.getGalaxies)
       .get('/:galaxyId', this.getGalaxyById)
+      .get('/:galaxyId/planets', this.getPlanetsByGalaxyId)
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.createGalaxy)
     // .put('/:galaxyId', this.updateGalaxy)
@@ -27,6 +29,15 @@ export class GalaxyController extends BaseController {
     try {
       const galaxy = await galaxyService.getGalaxyById(req.params.galaxyId);
       return res.send(galaxy)
+    } catch (error) {
+      nxt(error)
+    }
+  }
+
+  async getPlanetsByGalaxyId(req, res, nxt) {
+    try {
+      const planets = await planetService.getPlanetsByGalaxyId(req.params.galaxyId);
+      return res.send(planets)
     } catch (error) {
       nxt(error)
     }

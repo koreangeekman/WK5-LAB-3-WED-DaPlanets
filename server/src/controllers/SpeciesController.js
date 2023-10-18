@@ -34,8 +34,8 @@ export class SpeciesController extends BaseController {
 
   async getColoniesBySpecies(req, res, nxt) {
     try {
-      const species = await colonyService.getColoniesBySpecies(req.params.speciesId);
-      return res.send(species)
+      const colonies = await colonyService.getColoniesBySpecies(req.params.speciesId);
+      return res.send(colonies)
     } catch (error) {
       nxt(error)
     }

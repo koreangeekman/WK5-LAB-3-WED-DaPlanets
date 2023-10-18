@@ -20,6 +20,13 @@ class ColonyService {
     return colonies;
   }
 
+  async getColoniesByPlanetId(planetId) {
+    const colonies = await dbContext.Colonies.find({ planetId: planetId }).populate('planet').populate('species');
+    if (!colonies) { throw new BadRequest(`Unable to locate Colonies by Planet ID: ${planetId}`) }
+    return colonies;
+  }
+
+
   // vv AUTHORIZED USERS ONLY vv
 
   async createColony(body) {

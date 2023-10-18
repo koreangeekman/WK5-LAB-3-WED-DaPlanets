@@ -14,6 +14,14 @@ class PlanetService {
     return planet;
   }
 
+  async getPlanetsByGalaxyId(galaxyId) {
+    const planet = await dbContext.Planets.find({ galaxyId: galaxyId }).populate('galaxy');
+    if (!planet) { throw new BadRequest(`Unable to locate Planets by Galaxy ID: ${galaxyId}`) }
+    return planet;
+  }
+
+
+
   // vv AUTHORIZED USERS ONLY vv
 
   async createPlanet(body) {

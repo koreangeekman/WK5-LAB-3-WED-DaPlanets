@@ -14,6 +14,15 @@ class MoonService {
     return moon;
   }
 
+
+  async getMoonsByPlanetId(planetId) {
+    const moons = await dbContext.Moons.find({ planetId: planetId }).populate('planet');
+    if (!moons) { throw new BadRequest(`Unable to locate Moon by Planet ID: ${planetId}`) }
+    return moons;
+  }
+
+
+
   // vv AUTHORIZED USERS ONLY vv
 
   async createMoon(body) {
